@@ -1,5 +1,5 @@
 {
-  "name": "ogg",
+  "name": "@valyant/ogg",
   "description": "Node.js native binding to libogg",
   "keywords": [
     "ogg",
@@ -13,7 +13,7 @@
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://tootallnate.net)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/TooTallNate/node-ogg.git"
+    "url": "git://github.com/valyantai/node-ogg.git"
   },
   "main": "./index.js",
   "dependencies": {
