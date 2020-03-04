@@ -26,12 +26,12 @@
 namespace nodeogg
 {
 
+napi_property_attributes property_writable_enumerable = static_cast<napi_property_attributes>(napi_enumerable | napi_writable);
 OggPage::OggPage(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<OggPage>(info)
 {
-  Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
-};
+  memset(&op, 0, sizeof(op));
+}
 
 Napi::FunctionReference OggPage::constructor;
 
@@ -44,16 +44,16 @@ void OggPage::Init(Napi::Env env, Napi::Object exports)
   Napi::HandleScope scope(env);
 
   std::vector<PropertyDescriptor> methods = {
-      InstanceAccessor("header", &OggPage::getHeader, &OggPage::setHeader),
-      InstanceAccessor("body", &OggPage::getBody, &OggPage::setBody),
+      InstanceAccessor("header", &OggPage::getHeader, &OggPage::setHeader, property_writable_enumerable),
+      InstanceAccessor("body", &OggPage::getBody, &OggPage::setBody, property_writable_enumerable),
       InstanceMethod("toBuffer", &OggPage::toBuffer)};
 
-  Napi::Function func = DefineClass(env, "OggPage", methods);
+  Napi::Function func = DefineClass(env, "ogg_page", methods);
 
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
 
-  exports.Set("OggPage", func);
+  exports.Set("ogg_page", func);
 }
 
 void OggPage::setHeader(const Napi::CallbackInfo &info, const Napi::Value &value)
@@ -119,9 +119,8 @@ Napi::Object OggPage::NewInstance(Napi::Value arg)
 OggPacket::OggPacket(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<OggPacket>(info)
 {
-  Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
-};
+  memset(&op, 0, sizeof(op));
+}
 
 Napi::FunctionReference OggPacket::constructor;
 
@@ -134,18 +133,18 @@ void OggPacket::Init(Napi::Env env, Napi::Object exports)
   Napi::HandleScope scope(env);
 
   std::vector<PropertyDescriptor> methods = {
-      InstanceAccessor("packet", &OggPacket::packet, &OggPacket::setPacket),
-      InstanceAccessor("bytes", &OggPacket::bytes, nullptr),
-      InstanceAccessor("b_o_s", &OggPacket::b_o_s, &OggPacket::setB_o_s),
-      InstanceAccessor("e_o_s", &OggPacket::e_o_s, &OggPacket::setE_o_s),
-      InstanceAccessor("granulepos", &OggPacket::granulepos, &OggPacket::setGranulepos),
-      InstanceAccessor("packetno", &OggPacket::packetno, &OggPacket::setPacketno)};
-  Napi::Function func = DefineClass(env, "OggPacket", methods);
+      InstanceAccessor("packet", &OggPacket::packet, &OggPacket::setPacket, property_writable_enumerable),
+      InstanceAccessor("bytes", &OggPacket::bytes, nullptr, napi_enumerable),
+      InstanceAccessor("b_o_s", &OggPacket::b_o_s, &OggPacket::setB_o_s, property_writable_enumerable),
+      InstanceAccessor("e_o_s", &OggPacket::e_o_s, &OggPacket::setE_o_s, property_writable_enumerable),
+      InstanceAccessor("granulepos", &OggPacket::granulepos, &OggPacket::setGranulepos, property_writable_enumerable),
+      InstanceAccessor("packetno", &OggPacket::packetno, &OggPacket::setPacketno, property_writable_enumerable)};
+  Napi::Function func = DefineClass(env, "ogg_packet", methods);
 
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
 
-  exports.Set("OggPacket", func);
+  exports.Set("ogg_packet", func);
 }
 
 Napi::Value OggPacket::packet(const Napi::CallbackInfo &info)
@@ -254,9 +253,6 @@ Napi::Object OggPacket::NewInstance(Napi::Value arg)
 OggSyncState::OggSyncState(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<OggSyncState>(info)
 {
-  Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
-
   ogg_sync_init(&oy);
 };
 
@@ -403,7 +399,6 @@ OggStreamState::OggStreamState(const Napi::CallbackInfo &info)
     : Napi::ObjectWrap<OggStreamState>(info)
 {
   Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
   int serialno = info.Length() < 1 ? serial++ : info[0].ToNumber();
   if (0 != ogg_stream_init(&os, serialno))
   {
@@ -422,12 +417,12 @@ void OggStreamState::Init(Napi::Env env, Napi::Object exports)
 {
   Napi::HandleScope scope(env);
 
-  Napi::Function func = DefineClass(env, "OggStreamState", {});
+  Napi::Function func = DefineClass(env, "ogg_stream_state", {});
 
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
 
-  exports.Set("OggStreamState", func);
+  exports.Set("ogg_stream_state", func);
 }
 
 Napi::Object OggStreamState::NewInstance(Napi::Value arg)
