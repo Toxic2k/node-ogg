@@ -186,7 +186,7 @@ void OggPacket::setB_o_s(const Napi::CallbackInfo &info, const Napi::Value &valu
     Napi::TypeError::New(env, "Expected a Number").ThrowAsJavaScriptException();
     return;
   }
-  op.b_o_s = value.As<Napi::Number>();
+  op.b_o_s = value.As<Napi::Number>().Int32Value();
 }
 
 Napi::Value OggPacket::e_o_s(const Napi::CallbackInfo &info)
@@ -203,7 +203,7 @@ void OggPacket::setE_o_s(const Napi::CallbackInfo &info, const Napi::Value &valu
     Napi::TypeError::New(env, "Expected a Number").ThrowAsJavaScriptException();
     return;
   }
-  op.e_o_s = value.As<Napi::Number>();
+  op.e_o_s = value.As<Napi::Number>().Int32Value();
 }
 
 Napi::Value OggPacket::granulepos(const Napi::CallbackInfo &info)
