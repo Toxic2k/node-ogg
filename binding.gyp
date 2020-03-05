@@ -1,11 +1,12 @@
 {
   'targets': [
     {
-      'type': 'shared_library',
-      'product_extension': 'node',
-      'defines': [ 'BUILDING_NODE_EXTENSION' ],
       'target_name': 'ogg',
-      'include_dirs': [ "<!(node -e \"require('nan')\")" ],
+      'product_extension': 'node',
+      'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
+      'cflags!': [ '-fno-exceptions' ],
+      'cflags_cc!': [ '-fno-exceptions' ],
+      'include_dirs': [ "<!@(node -p \"require('node-addon-api').include\")" ],
       'sources': [
         'src/binding.cc',
       ],

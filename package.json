@@ -19,8 +19,8 @@
   "gypfile": true,
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "2.14.0",
-    "readable-stream": "3.6.0"
+    "debug": "^4.1.1",
+    "node-addon-api": "^2.0.0"
   },
   "devDependencies": {
     "gyp": "^0.5.0",
