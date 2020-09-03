@@ -2,13 +2,12 @@
 #define OGGSTRUCTWRAPPER_HXX
 
 #include <napi.h>
+
 #include "ogg/ogg.h"
 
-namespace nodeogg
-{
-class OggSyncState : public Napi::ObjectWrap<OggSyncState>
-{
-public:
+namespace nodeogg {
+class OggSyncState : public Napi::ObjectWrap<OggSyncState> {
+ public:
   static void Init(Napi::Env env, Napi::Object exports);
   static Napi::Object NewInstance(Napi::Value arg);
 
@@ -17,13 +16,12 @@ public:
 
   ogg_sync_state oy;
 
-private:
+ private:
   static Napi::FunctionReference constructor;
 };
 
-class OggStreamState : public Napi::ObjectWrap<OggStreamState>
-{
-public:
+class OggStreamState : public Napi::ObjectWrap<OggStreamState> {
+ public:
   static void Init(Napi::Env env, Napi::Object exports);
   static Napi::Object NewInstance(Napi::Value arg);
 
@@ -32,13 +30,12 @@ public:
 
   ogg_stream_state os;
 
-private:
+ private:
   static Napi::FunctionReference constructor;
 };
 
-class OggPage : public Napi::ObjectWrap<OggPage>
-{
-public:
+class OggPage : public Napi::ObjectWrap<OggPage> {
+ public:
   static void Init(Napi::Env env, Napi::Object exports);
   static Napi::Object NewInstance(Napi::Value arg);
 
@@ -53,14 +50,15 @@ public:
   Napi::Value toBuffer(const Napi::CallbackInfo &info);
 
   ogg_page op;
+  Napi::Reference<Napi::TypedArrayOf<uint8_t>> jsBufferHeaderRef;
+  Napi::Reference<Napi::TypedArrayOf<uint8_t>> jsBufferBodyRef;
 
-private:
+ private:
   static Napi::FunctionReference constructor;
 };
 
-class OggPacket : public Napi::ObjectWrap<OggPacket>
-{
-public:
+class OggPacket : public Napi::ObjectWrap<OggPacket> {
+ public:
   static void Init(Napi::Env env, Napi::Object exports);
   static Napi::Object NewInstance(Napi::Value arg);
 
@@ -85,11 +83,12 @@ public:
   void setPacketno(const Napi::CallbackInfo &info, const Napi::Value &value);
 
   ogg_packet op;
+  Napi::Reference<Napi::TypedArrayOf<uint8_t>> jsBufferRef;
 
-private:
+ private:
   static Napi::FunctionReference constructor;
 };
 
-} // namespace nodeogg
+}  // namespace nodeogg
 
 #endif
