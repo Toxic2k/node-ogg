@@ -4,7 +4,7 @@ var ogg = require('../');
 var path = require('path');
 var Encoder = ogg.Encoder;
 var assert = require('assert');
-var ogg_packet = require('ogg-packet');
+var ogg_packet = require('../lib/binding').ogg_packet;
 var fixtures = path.resolve(__dirname, 'fixtures');
 
 describe('Encoder', function () {
