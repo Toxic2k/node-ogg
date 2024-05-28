@@ -416,7 +416,7 @@ class OggStreamPacketoutWorker : public Napi::AsyncWorker {
       : Napi::AsyncWorker(callback), os(os), packet(packet), rtn(0) {}
   ~OggStreamPacketoutWorker() {}
   void Execute() { rtn = ogg_stream_packetout(os, packet); }
-  void HandleOKCallback() {
+  void OnOK() {
     Napi::Env env = Env();
     if (rtn == 1) {
       Callback().Call(
