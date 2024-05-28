@@ -30,7 +30,7 @@ describe('Encoder', function () {
       var s = e.stream();
 
       // create `ogg_packet`
-      var data = new Buffer('test');
+      var data = Buffer.from('test');
       var packet = new ogg_packet();
       packet.packet = data;
       packet.bytes = data.length;
@@ -57,7 +57,7 @@ describe('Encoder', function () {
       var s = e.stream();
 
       // create an `ogg_packet` struct
-      var data = new Buffer('test');
+      var data = Buffer.from('test');
       var packet = new ogg_packet();
       packet.packet = data;
       packet.bytes = data.length;
@@ -90,7 +90,7 @@ describe('Encoder', function () {
         var s = e.stream();
 
         // create `ogg_packet`
-        var data = new Buffer(str);
+        var data = Buffer.from(str);
         var packet = new ogg_packet();
         packet.packet = data;
         packet.bytes = data.length;
