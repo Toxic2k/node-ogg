@@ -16,6 +16,7 @@
     "url": "git://github.com/valyantai/node-ogg.git"
   },
   "main": "./index.js",
+  "types": "index.d.ts",
   "gypfile": true,
   "dependencies": {
     "bindings": "^1.5.0",
@@ -23,7 +24,9 @@
     "node-addon-api": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^10.4.0"
+    "@types/node": "^20.12.12",
+    "mocha": "^10.4.0",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "test": "mocha --reporter spec"
